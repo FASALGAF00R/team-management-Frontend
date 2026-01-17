@@ -19,7 +19,8 @@ import {
   ChevronDown,
   RefreshCw,
   Calendar,
-  Clock
+  Clock,
+  Info
 } from 'lucide-react';
 
 const API_BASE = API;
@@ -51,6 +52,28 @@ export default function Users() {
     roleValidTill: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+
+  // Get current logged-in user ID from localStorage
+  const getCurrentUserId = () => {
+    try {
+      const userData = localStorage.getItem('user') || localStorage.getItem('adminUser');
+      if (userData) {
+        const user = JSON.parse(userData);
+        return user.id || user._id;
+      }
+    } catch (e) {
+      console.error('Error parsing user data:', e);
+    }
+    return null;
+  };
+
+  const currentUserId = getCurrentUserId();
+
+  // Check if editing self
+  const isSelfEdit = () => {
+    return selectedUser && currentUserId && 
+      (selectedUser._id === currentUserId || selectedUser.id === currentUserId);
+  };
 
   // Format date for display
   const formatDate = (dateString) => {
@@ -670,17 +693,32 @@ export default function Users() {
               {/* Role */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Role</label>
-                <select
-                  name="roleId"
-                  value={formData.roleId}
-                  onChange={handleInputChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none bg-white"
-                >
-                  <option value="">Select a role</option>
-                  {roles.map(role => (
-                    <option key={role._id} value={role._id}>{role.name}</option>
-                  ))}
-                </select>
+                {isSelfEdit() ? (
+                  <>
+                    {/* Disabled role display for self-edit */}
+                    <div className="w-full px-4 py-3 border border-gray-200 rounded-lg bg-gray-100 text-gray-600 cursor-not-allowed">
+                      {roles.find(r => r._id === formData.roleId)?.name || 'No role assigned'}
+                    </div>
+                    <div className="mt-2 flex items-start gap-2 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                      <Info size={18} className="text-amber-600 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm text-amber-800">
+                        You cannot change your own role. Another admin must do this for you.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <select
+                    name="roleId"
+                    value={formData.roleId}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none appearance-none bg-white"
+                  >
+                    <option value="">Select a role</option>
+                    {roles.map(role => (
+                      <option key={role._id} value={role._id}>{role.name}</option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               {/* Role Validity Dates */}

@@ -331,9 +331,9 @@ export default function Login() {
           <div className="text-center space-y-4">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
+              {/* <Link to="/register" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
                 Contact Admin
-              </Link>
+              </Link> */}
             </p>
             <p className="text-gray-600">
               Are you an admin?{' '}
