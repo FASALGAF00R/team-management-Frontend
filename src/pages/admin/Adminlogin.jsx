@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
+import API from "../config/api";
 
 const AdminLogin = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +29,7 @@ const AdminLogin = () => {
   const loginAdmin = async (email, password) => {
     try {
       // Your API endpoint
-      const API_URL = 'http://localhost:5000/api/auth/login'; 
+      const API_URL = `${API}/auth/login`; 
       
       const response = await axios.post(API_URL, {
         email,

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { UserPlus, Mail, Lock, User, Users, Shield, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import axios from 'axios';
+import API from '../../config/api';
 
 export default function RegisterUser() {
   const [formData, setFormData] = useState({
@@ -25,7 +26,7 @@ export default function RegisterUser() {
 
       // Fetch roles (public endpoint - no auth needed)
       try {
-        const rolesRes = await axios.get('http://localhost:5000/api/roles/public');
+        const rolesRes = await axios.get(`${API}/roles/public`);
         console.log('Roles response:', rolesRes.data);
         setRoles(rolesRes.data.roles || []);
       } catch (error) {
@@ -34,7 +35,7 @@ export default function RegisterUser() {
 
       // Fetch teams (requires authentication)
       try {
-        const teamsRes = await axios.get('http://localhost:5000/api/teams', { headers });
+        const teamsRes = await axios.get(`${API}/teams`, { headers });
         setTeams(teamsRes.data.teams || teamsRes.data || []);
       } catch (error) {
         console.error('Error fetching teams:', error);
@@ -70,7 +71,7 @@ export default function RegisterUser() {
         teamId: formData.teamId || null
       };
 
-      await axios.post('http://localhost:5000/api/users/users', payload, {
+      await axios.post(`${API}/users/users`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

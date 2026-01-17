@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../../config/api';
 import { 
   Users as UsersIcon, 
   UserPlus, 
@@ -21,7 +22,7 @@ import {
   Clock
 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = API;
 
 export default function Users() {
   const [users, setUsers] = useState([]);

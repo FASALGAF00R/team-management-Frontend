@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../../config/api';
 import { 
   Users, 
   Plus, 
@@ -16,7 +17,7 @@ import {
   Search
 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = API;
 
 export default function TeamManagement() {
   const [teams, setTeams] = useState([]);

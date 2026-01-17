@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API from '../../config/api';
 import { 
   FileText, 
   Search, 
@@ -18,7 +19,7 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = API;
 
 // Action icons and colors
 const ACTION_CONFIG = {

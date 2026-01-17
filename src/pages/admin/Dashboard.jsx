@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API from '../../config/api';
 import { 
   BarChart3, 
   Users, 
@@ -19,7 +20,7 @@ import {
   AlertCircle
 } from "lucide-react";
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = API;
 
 const Dashboard = () => {
   const navigate = useNavigate();
